@@ -16,7 +16,8 @@ function module_sitemap_menu() {
   );
   $items['module-sitemap'] = array(
     'title' => 'Module Sitemap',
-    'page callback' => '_module_sitemap_view_sitemap',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('_module_sitemap_view_sitemap'),
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array('view module sitemap'),
   );
@@ -62,12 +63,27 @@ function module_sitemap_config() {
  * @return array
  *   The render array for the module sitemap.
  */
-function _module_sitemap_view_sitemap() {
-  $output = array();
-  
+function _module_sitemap_view_sitemap($form, &$form_state) {
   $hook = 'menu';
   
   $modules = module_implements($hook);
+  
+  // This is for the ajax callback to replace the form's contents.
+  $form['modules'] = array(
+    '#prefix' => '<div id="filter_div">',
+    '#suffix' => '</div>',
+  );
+  
+  $form['module_filter'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Filter Module'),
+    '#description' => t('Enter the complete system name of module you are looking for.'),
+    '#weight' => -15,
+    '#ajax' => array(
+      'callback' => 'module_sitemap_filter',
+      'wrapper' => 'filter_div',
+     ),
+  );
   
   // Count the number of modules that implement hook_menu() so we can display
   // to the user.
@@ -81,7 +97,7 @@ function _module_sitemap_view_sitemap() {
     
     $items = call_user_func($function);
     
-    $output[$module] = array(
+    $form['modules'][$module] = array(
       '#type' => 'fieldset',
       '#title' => $module,
       '#collapsible' => TRUE,
@@ -90,7 +106,7 @@ function _module_sitemap_view_sitemap() {
     foreach ($items as $key => $value) {
       $title = isset($value['title']) ? $value['title'] : '';
       $description = isset($value['description']) ? ' - ' . $value['description'] : '';
-      $output[$module][$title] = array(
+      $form['modules'][$module][$title] = array(
         '#type' => 'markup',
         '#markup' => '<p>' . l($title . ' - ' . $key, $key) . ' ' . $description . '</p>',
       );
@@ -98,11 +114,43 @@ function _module_sitemap_view_sitemap() {
     }
   }
   
-  $output['stats_message'] = array(
+  $form['stats_message'] = array(
     '#type' => 'markup',
     '#markup' => '<p>' . t('There are') . ' <strong>' . $num_modules . '</strong> ' . t('modules that have links and') . ' <strong>' . $num_links . '</strong> ' . 'total links.' . '</p>',
     '#weight' => -10,
   );
   
-  return $output;
+  return $form;
+}
+
+function module_sitemap_filter($form, $form_state) {
+  if (isset($form_state['values']['module_filter']) && !empty($form_state['values']['module_filter'])) {
+    $hook = 'menu';
+    $module_name = $form_state['values']['module_filter'];
+    
+    $items = call_user_func($module_name . '_' . $hook);
+    
+    $form = array();
+    
+    $form['modules'][$module_name] = array(
+      '#type' => 'fieldset',
+      '#title' => $module_name,
+      '#collapsible' => TRUE,
+    );
+    
+    // Print out the links for the module.
+    foreach ($items as $key => $value) {
+      $title = isset($value['title']) ? $value['title'] : '';
+      $description = isset($value['description']) ? ' - ' . $value['description'] : '';
+      $form['modules'][$module_name][$title] = array(
+        '#type' => 'markup',
+        '#markup' => '<p>' . l($title . ' - ' . $key, $key) . ' ' . $description . '</p>',
+      );
+    }
+  }
+  else {
+    $form = drupal_get_form('_module_sitemap_view_sitemap');
+  }
+  
+  return $form;
 }
