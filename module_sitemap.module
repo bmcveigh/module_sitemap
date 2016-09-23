@@ -1,119 +1,18 @@
 <?php
+
 /**
  * @file
- * The main module file.
+ * Provide a sitemap for the list of available enabled modules.
  */
+
+use \Drupal\Core\Routing\RouteMatchInterface;
 
 /**
- * Implements hook_menu().
+ * Implements hook_help().
  */
-function module_sitemap_menu() {
-  $items['admin/config/development/module-sitemap'] = array(
-    'title' => 'Module Sitemap Configuration',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('module_sitemap_config'),
-    'access arguments' => array('administer module sitemap'),
-  );
-  $items['module-sitemap'] = array(
-    'title' => 'Module Sitemap',
-    'page callback' => '_module_sitemap_view_sitemap',
-    'type' => MENU_NORMAL_ITEM,
-    'access arguments' => array('view module sitemap'),
-  );
-
-  return $items;
-}
-
-/**
- * Implements hook_permission().
- */
-function module_sitemap_permission() {
-  return array(
-    'administer module sitemap' => array(
-      'title' => t('Administer module_sitemap'),
-      'description' => t('Configure module_sitemap module'),
-    ),
-    'view module sitemap' => array(
-      'title' => t('View module_sitemap'),
-      'description' => t('View the each module\'s URIs'),
-    ),
-  );
-}
-
-/**
- * The configuration for for this module.
- * 
- * @return array
- *   The configuration form array.
- */
-function module_sitemap_config() {
-  $build = array();
-  $build['markup'] = array(
-    '#type' => 'markup',
-    '#markup' => 'In progress.',
-  );
-  
-  return system_settings_form($build);
-}
-
-/**
- * Page callback to view the module sitemap.
- * 
- * @return array
- *   The render array for the module sitemap.
- */
-function _module_sitemap_view_sitemap() {
-  $hook = 'menu';
-  
-  $modules = module_implements($hook);
-  
-  $build['module_filter'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Filter Module'),
-    '#description' => t('Enter the complete system name of module you are looking for.'),
-    '#weight' => -15,
-  );
-  
-  $build['module_submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Submit'),
-    '#weight' => -14,
-  );
-  
-  // Count the number of modules that implement hook_menu() so we can display
-  // to the user.
-  $num_modules = count($modules);
-  
-  // Count the total number of links.
-  $num_links = 0;
-  
-  foreach ($modules as $module) {
-    $function = $module . '_' . $hook;
-    
-    $items = call_user_func($function);
-    
-    $build['modules'][$module] = array(
-      '#type' => 'fieldset',
-      '#title' => $module,
-      '#collapsible' => TRUE,
-    );
-    
-    foreach ($items as $key => $value) {
-      $title = isset($value['title']) ? $value['title'] : '';
-      $description = isset($value['description']) ? ' - ' . $value['description'] : '';
-      $build['modules'][$module][$title] = array(
-        '#type' => 'markup',
-        '#markup' => '<p>' . l($title . ' - ' . $key, $key) . ' ' . $description . '</p>',
-      );
-      ++$num_links;
-    }
+function module_sitemap_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.module_sitemap':
+      return t('To access the module sitemap, click @here_link. This module gives you the ability to look at all of the paths for each module holistically.', array('@here_link' => '<a href="/module-sitemap">here</a>'));
   }
-  
-  $build['stats_message'] = array(
-    '#type' => 'markup',
-    '#markup' => '<p>' . t('There are') . ' <strong>' . $num_modules . '</strong> ' . t('modules that have links and') . ' <strong>' . $num_links . '</strong> ' . 'total links.' . '</p>',
-    '#weight' => -10,
-  );
-  
-  return $build;
 }

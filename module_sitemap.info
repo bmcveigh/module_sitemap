@@ -1,5 +1,0 @@
-name = Module Sitemap
-description = Displays a sitemap for all of your enabled modules.
-package = Pakorasoft
-core = 7.x
-configure = admin/config/development/module-sitemap
