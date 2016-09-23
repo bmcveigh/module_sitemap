@@ -36,18 +36,7 @@ class AdminSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('module_sitemap.settings');
-
-    $form['show_links_with_no_title'] = array(
-      '#type' => 'radios',
-      '#title' => t('Show links with no title?'),
-      '#default_value' => $config->get('show_links_with_no_title'),
-      '#options' => array(
-        'yes' => t('Yes'),
-        'no' => t('No'),
-      ),
-      '#required' => TRUE,
-    );
-
+    
     $form['display_full_url'] = array(
       '#type' => 'radios',
       '#title' => t('Display full URL?'),

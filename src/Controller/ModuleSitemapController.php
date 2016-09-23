@@ -20,6 +20,8 @@ class ModuleSitemapController {
     $modules = $moduleHandler->getModuleList();
     $user = \Drupal::currentUser();
 
+    $config = \Drupal::config('module_sitemap.settings');
+
     foreach ($modules as $module => $data) {
       $module_path = drupal_get_path('module', $module);
       $routing_path = $module_path . '/' . $module . '.routing.yml';
@@ -45,12 +47,19 @@ class ModuleSitemapController {
           // require a custom argument.
           $exclude = preg_match('/\\{|\\}/', $route['path']);
 
-          if ($exclude) {
+          if ($exclude || !$user_has_permission) {
             continue;
           }
 
-          if (isset($route['defaults']['_title']) && $user_has_permission) {
-            $link = Link::createFromRoute($route['defaults']['_title'], $route_name);
+          $should_display_full_url = $config->get('display_full_url');
+          $text_display = $route['path'];
+
+          if (isset($route['defaults']['_title'])) {
+            if ($should_display_full_url === 'no') {
+              $text_display = $route['defaults']['_title'];
+            }
+
+            $link = Link::createFromRoute($text_display, $route_name);
             $routes[] = $link->toString();
           }
         }
