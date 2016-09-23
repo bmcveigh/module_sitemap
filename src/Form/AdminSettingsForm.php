@@ -39,11 +39,22 @@ class AdminSettingsForm extends ConfigFormBase {
 
     $form['show_links_with_no_title'] = array(
       '#type' => 'radios',
-      '#title' => t('Show links with no title.'),
+      '#title' => t('Show links with no title?'),
       '#default_value' => $config->get('show_links_with_no_title'),
       '#options' => array(
-        0 => t('Yes'),
-        1 => t('No'),
+        'yes' => t('Yes'),
+        'no' => t('No'),
+      ),
+      '#required' => TRUE,
+    );
+
+    $form['display_full_url'] = array(
+      '#type' => 'radios',
+      '#title' => t('Display full URL?'),
+      '#default_value' => $config->get('display_full_url'),
+      '#options' => array(
+        'yes' => t('Yes'),
+        'no' => t('No'),
       ),
       '#required' => TRUE,
     );
@@ -56,7 +67,8 @@ class AdminSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('module_sitemap.settings')
-      ->set('data_directory', $form_state->getValue('data_directory'))
+      ->set('show_links_with_no_title', $form_state->getValue('show_links_with_no_title'))
+      ->set('display_full_url', $form_state->getValue('display_full_url'))
       ->save();
 
     parent::submitForm($form, $form_state);
