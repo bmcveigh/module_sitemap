@@ -13,6 +13,7 @@ use \Drupal\Core\Routing\RouteMatchInterface;
 function module_sitemap_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.module_sitemap':
-      return t('To access the module sitemap, click @here_link. This module gives you the ability to look at all of the paths for each module holistically.', array('@here_link' => '<a href="/module-sitemap">here</a>'));
+      $help = t('@help_text', array('@help_text' => file_get_contents(drupal_get_path('module', 'module_sitemap') . '/README.txt')));
+      return nl2br($help);
   }
 }
