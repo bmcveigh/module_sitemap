@@ -1,7 +1,7 @@
 'administer module_sitemap':
   title: 'administer module_sitemap'
   description: 'Administer Module Sitemap'
-
+  restrict access: true
 'access module_sitemap':
   title: 'access module_sitemap'
   description: 'Access Module Sitemap'
