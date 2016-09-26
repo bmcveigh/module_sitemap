@@ -4,7 +4,6 @@ namespace Drupal\module_sitemap\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\Html;
 
 /**
  * TODO: class docs.
