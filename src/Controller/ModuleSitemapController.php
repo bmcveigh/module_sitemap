@@ -55,7 +55,7 @@ class ModuleSitemapController {
           $text_display = $route['path'];
 
           if (isset($route['defaults']['_title'])) {
-            if ($should_display_full_url === 'no') {
+            if (!$should_display_full_url) {
               $text_display = $route['defaults']['_title'];
             }
 

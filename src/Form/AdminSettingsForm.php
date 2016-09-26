@@ -34,14 +34,9 @@ class AdminSettingsForm extends ConfigFormBase {
     $config = $this->config('module_sitemap.settings');
 
     $form['display_full_url'] = array(
-      '#type' => 'radios',
+      '#type' => 'checkbox',
       '#title' => $this->t('Display full URL?'),
       '#default_value' => $config->get('display_full_url'),
-      '#options' => array(
-        'yes' => $this->t('Yes'),
-        'no' => $this->t('No'),
-      ),
-      '#required' => TRUE,
     );
 
     return parent::buildForm($form, $form_state);
@@ -52,8 +47,7 @@ class AdminSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('module_sitemap.settings')
-      ->set('show_links_with_no_title', Html::escape($form_state->getValue('show_links_with_no_title')))
-      ->set('display_full_url', Html::escape($form_state->getValue('display_full_url')))
+      ->set('display_full_url', $form_state->getValue('display_full_url') ? TRUE : FALSE)
       ->save();
 
     parent::submitForm($form, $form_state);
