@@ -1,7 +1,7 @@
-'administer module_sitemap':
+'administer module sitemap':
   title: 'Administer Module Sitemap'
   description: 'Change settings for the Module Sitemap module.'
   restrict access: true
-'access module_sitemap':
+'access module sitemap':
   title: 'Access Module Sitemap'
   description: 'Grant users the ability to view pages included from different modules.'
