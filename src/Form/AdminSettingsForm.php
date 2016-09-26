@@ -6,7 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * TODO: class docs.
+ * Configuration form class for the Module Sitemap module.
  */
 class AdminSettingsForm extends ConfigFormBase {
 
