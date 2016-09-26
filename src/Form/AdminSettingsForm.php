@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\module_sitemap\Form\AdminSettingsForm.
- */
-
 namespace Drupal\module_sitemap\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -37,14 +32,14 @@ class AdminSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('module_sitemap.settings');
-    
+
     $form['display_full_url'] = array(
       '#type' => 'radios',
-      '#title' => t('Display full URL?'),
+      '#title' => $this->t('Display full URL?'),
       '#default_value' => $config->get('display_full_url'),
       '#options' => array(
-        'yes' => t('Yes'),
-        'no' => t('No'),
+        'yes' => $this->t('Yes'),
+        'no' => $this->t('No'),
       ),
       '#required' => TRUE,
     );
@@ -63,4 +58,5 @@ class AdminSettingsForm extends ConfigFormBase {
 
     parent::submitForm($form, $form_state);
   }
+
 }

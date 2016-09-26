@@ -1,11 +1,7 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\module_sitemap\Controller\ModuleSitemapController.
- */
-
 namespace Drupal\module_sitemap\Controller;
+
 use Drupal\Core\Link;
 use Symfony\Component\Yaml\Yaml;
 
@@ -13,6 +9,10 @@ use Symfony\Component\Yaml\Yaml;
  * Page callback to get the list of modules and their paths.
  */
 class ModuleSitemapController {
+
+  /**
+   * Page callback for /module-sitemap.
+   */
   public function content() {
     $build = array();
 
@@ -77,4 +77,5 @@ class ModuleSitemapController {
 
     return $build;
   }
+
 }
