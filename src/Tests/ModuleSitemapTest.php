@@ -17,7 +17,7 @@ class ModuleSitemapTest extends WebTestBase {
    * @var array
    */
   public static $modules = array('module_sitemap');
-  
+
   /**
    * {@inheritdoc}
    */
@@ -28,12 +28,12 @@ class ModuleSitemapTest extends WebTestBase {
   /**
    * Test the admin page as well as the sitemap page
    * for this module. They should not be able to access
-   * both 
+   * both pages.
    */
   protected function testUnauthorizedUser() {
     // Log in as an authenticated drupal user so we can test the admin page.
     $this->drupalLogin($this->drupalCreateUser());
-    
+
     // Test Sitemap functionality.
     $this->drupalGet('module-sitemap');
     $this->assertResponse('403');
@@ -75,4 +75,5 @@ class ModuleSitemapTest extends WebTestBase {
     $this->drupalGet('admin/config/development/module-sitemap');
     $this->assertResponse('403');
   }
+
 }
