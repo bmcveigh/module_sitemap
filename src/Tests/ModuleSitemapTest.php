@@ -80,7 +80,7 @@ class ModuleSitemapTest extends WebTestBase {
 
     // Make sure the configuration page exists. User should be granted access.
     $this->drupalGet('admin/config/development/module-sitemap');
-    $this->assertResponse('403');
+    $this->assertResponse('200');
   }
 
 }
