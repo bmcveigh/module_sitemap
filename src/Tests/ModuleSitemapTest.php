@@ -56,10 +56,7 @@ class ModuleSitemapTest extends WebTestBase {
 
     // Make sure that this user cannot see any admin links. If they can, fail
     // the test.
-    $administerFound = $this->assertText('Administer');
-    if ($administerFound) {
-      $this->fail('Found the word Administer on the page. This is a security issue and should be addressed.');
-    }
+    $this->assertTextHelper('Administer', 'Found the word Administer on the page. This is a security issue and should be addressed.', 'Other', TRUE);
 
     // Make sure the configuration page exists. User should be denied access.
     $this->drupalGet('admin/config/development/module-sitemap');
