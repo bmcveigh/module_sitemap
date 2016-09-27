@@ -5,7 +5,7 @@ namespace Drupal\module_sitemap\Tests;
 use Drupal\simpletest\WebTestBase;
 
 /**
- * Tests block HTML ID validity.
+ * Tests module_sitemap access control.
  *
  * @group module_sitemap
  */
