@@ -1,4 +1,4 @@
-'module_sitemap.module-sitemap':
+module_sitemap.module-sitemap:
   path: '/module-sitemap'
   defaults:
     _controller: '\Drupal\module_sitemap\Controller\ModuleSitemapController::content'
@@ -6,7 +6,7 @@
   requirements:
     _permission: 'access module sitemap'
 
-'module_sitemap.admin.config.development.module_sitemap':
+module_sitemap.admin.config.development.module_sitemap:
   path: '/admin/config/development/module-sitemap'
   defaults:
     _form: '\Drupal\module_sitemap\Form\AdminSettingsForm'

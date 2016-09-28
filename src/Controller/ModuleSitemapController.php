@@ -21,6 +21,8 @@ class ModuleSitemapController {
     $user = \Drupal::currentUser();
 
     $config = \Drupal::config('module_sitemap.settings');
+    $shouldDisplayFullUrl = $config->get('display_full_url');
+    $shouldGroupByModule = $config->get('group_by_module');
 
     foreach ($modules as $module => $data) {
       $module_path = drupal_get_path('module', $module);
@@ -31,11 +33,15 @@ class ModuleSitemapController {
       if (file_exists($routing_path)) {
         $yml = file_get_contents($routing_path);
         $routing_data = Yaml::parse($yml);
-
-        $build[$module] = array(
-          '#type' => 'fieldset',
-          '#title' => $info['name'],
-        );
+        if ($shouldGroupByModule) {
+          $build[$module] = array(
+            '#type' => 'fieldset',
+            '#title' => $info['name'],
+            '#attributes' => array(
+              'class' => array('module-sitemap-group'),
+            ),
+          );
+        }
 
         $routes = array();
         foreach ($routing_data as $route_name => $route) {
@@ -51,11 +57,10 @@ class ModuleSitemapController {
             continue;
           }
 
-          $should_display_full_url = $config->get('display_full_url');
           $text_display = $route['path'];
 
           if (isset($route['defaults']['_title'])) {
-            if (!$should_display_full_url) {
+            if (!$shouldDisplayFullUrl) {
               $text_display = $route['defaults']['_title'];
             }
 

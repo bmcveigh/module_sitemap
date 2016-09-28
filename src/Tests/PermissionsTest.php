@@ -9,7 +9,7 @@ use Drupal\simpletest\WebTestBase;
  *
  * @group module_sitemap
  */
-class ModuleSitemapTest extends WebTestBase {
+class PermissionsTest extends WebTestBase {
 
   /**
    * Modules to install.
@@ -36,11 +36,11 @@ class ModuleSitemapTest extends WebTestBase {
 
     // Test Sitemap functionality.
     $this->drupalGet('module-sitemap');
-    $this->assertResponse('403');
+    $this->assertResponse(403);
 
     // Make sure the configuration page exists. User should be denied access.
     $this->drupalGet('admin/config/development/module-sitemap');
-    $this->assertResponse('403');
+    $this->assertResponse(403);
   }
 
   /**
@@ -52,7 +52,7 @@ class ModuleSitemapTest extends WebTestBase {
 
     // Test Sitemap functionality.
     $this->drupalGet('module-sitemap');
-    $this->assertResponse('200');
+    $this->assertResponse(200);
 
     // Make sure that this user cannot see any admin links. If they can, fail
     // the test.
@@ -60,7 +60,7 @@ class ModuleSitemapTest extends WebTestBase {
 
     // Make sure the configuration page exists. User should be denied access.
     $this->drupalGet('admin/config/development/module-sitemap');
-    $this->assertResponse('403');
+    $this->assertResponse(403);
   }
 
   /**
@@ -73,11 +73,11 @@ class ModuleSitemapTest extends WebTestBase {
 
     // Test Sitemap functionality.
     $this->drupalGet('module-sitemap');
-    $this->assertResponse('200');
+    $this->assertResponse(200);
 
     // Make sure the configuration page exists. User should be granted access.
     $this->drupalGet('admin/config/development/module-sitemap');
-    $this->assertResponse('200');
+    $this->assertResponse(200);
   }
 
 }

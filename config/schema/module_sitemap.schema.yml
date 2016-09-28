@@ -7,3 +7,6 @@ module_sitemap.settings:
     display_full_url:
       type: boolean
       label: 'true if the full URL should be displayed on the sitemap page and false if title should be displayed.'
+    group_by_module:
+      type: boolean
+      label: 'true if the links for each module should be displayed as a fieldset and false if they should not be grouped.'

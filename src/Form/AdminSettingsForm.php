@@ -38,6 +38,13 @@ class AdminSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('display_full_url'),
     );
 
+    $form['group_by_module'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Group by module?'),
+      '#description' => $this->t('If checked, the links for each module will be grouped. If unchecked, the links will be one list.'),
+      '#default_value' => $config->get('group_by_module'),
+    );
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -47,6 +54,7 @@ class AdminSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('module_sitemap.settings')
       ->set('display_full_url', $form_state->getValue('display_full_url') ? TRUE : FALSE)
+      ->set('group_by_module', $form_state->getValue('group_by_module') ? TRUE : FALSE)
       ->save();
 
     parent::submitForm($form, $form_state);
