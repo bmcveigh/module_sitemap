@@ -14,7 +14,7 @@ INSTALLATION
 ------------
 
 Install as usual, see
-https://drupal.org/documentation/install/modules-themes/modules-7 for further
+https://www.drupal.org/docs/8/extending-drupal-8/installing-modules for further
 information.
 
 
@@ -27,7 +27,7 @@ the appropriate permissions. If that doesn't work, try clearing your cache.
 Below are three ways to clear your cache:
 1. UI - Navigate to 'admin/config/development/performance' and click
    the 'Clear all caches' button.
-2. Drush - from command line, enter 'drush cr all'.
+2. Drush - from command line, enter 'drush cache-rebuild'.
 3. Drupal console - from the command line, enter 'drupal cache:rebuild'.
 
 
