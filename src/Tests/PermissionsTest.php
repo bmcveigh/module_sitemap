@@ -26,9 +26,7 @@ class PermissionsTest extends WebTestBase {
   }
 
   /**
-   * Test the admin page as well as the sitemap page
-   * for this module. They should not be able to access
-   * both pages.
+   * Test the admin page as well as the sitemap page.
    */
   protected function testUnauthorizedUser() {
     // Log in as an authenticated drupal user so we can test the admin page.
@@ -44,10 +42,11 @@ class PermissionsTest extends WebTestBase {
   }
 
   /**
-   * Log in as a user with the 'access module sitemap' permission. They should
-   * be able to access the module sitemap page but not administer the module.
+   * Log in as a user with the 'access module sitemap' permission.
    */
   protected function testAuthorizedUser() {
+    // Users with the 'access module sitemap' permission should be able to
+    // access the module sitemap page but not administer the module.
     $this->drupalLogin($this->drupalCreateUser(['access module sitemap']));
 
     // Test Sitemap functionality.
@@ -65,8 +64,6 @@ class PermissionsTest extends WebTestBase {
 
   /**
    * Log in as a user with the 'administer module sitemap' permission.
-   * They should be able to access the module sitemap page AND administer
-   * this module.
    */
   protected function testAdminUser() {
     $this->drupalLogin($this->drupalCreateUser(['access module sitemap', 'administer module sitemap']));

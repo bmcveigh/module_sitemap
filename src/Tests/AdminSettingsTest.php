@@ -27,8 +27,7 @@ class AdminSettingsTest extends WebTestBase {
   }
 
   /**
-   * Test the configuration to make sure the variables get installed when this
-   * module is enabled.
+   * Test the configuration to make sure the variables get installed.
    */
   protected function testSettings() {
     $config = $this->config('module_sitemap.settings');
