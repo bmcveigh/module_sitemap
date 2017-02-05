@@ -46,13 +46,27 @@ class ModuleSitemapController {
         $routes = array();
         foreach ($routing_data as $route_name => $route) {
           $user_is_admin = in_array('administrator', $user->getRoles());
-          $user_has_permission = $user_is_admin || isset($route['requirements']['_permission']) ?
-            $user->hasPermission($route['requirements']['_permission']) : FALSE;
+
+          if (isset($route['requirements']['_permission'])) {
+            $user_has_permission = $user_is_admin || isset($route['requirements']['_permission']) ?
+              $user->hasPermission($route['requirements']['_permission']) : FALSE;
+          }
+          else {
+            $user_has_permission = TRUE;
+          }
 
           // Do not include links that include '{' or '}' since these links
           // require a custom argument.
-          $exclude = preg_match('/\\{|\\}/', $route['path']);
+          if (isset($route['path'])) {
+            $exclude = preg_match('/\\{|\\}/', $route['path']);
+          }
+          else {
+            $exclude = TRUE;
+          }
 
+          // If link passes in arguments by the users (e.g. node/1) or they
+          // do not have permission to view a particular page,
+          // do not show the link.
           if ($exclude || !$user_has_permission) {
             continue;
           }
