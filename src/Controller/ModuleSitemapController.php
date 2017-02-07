@@ -2,6 +2,7 @@
 
 namespace Drupal\module_sitemap\Controller;
 
+use Drupal;
 use Drupal\Core\Link;
 use Symfony\Component\Yaml\Yaml;
 
@@ -16,11 +17,11 @@ class ModuleSitemapController {
   public function content() {
     $build = array();
 
-    $moduleHandler = \Drupal::moduleHandler();
+    $moduleHandler = Drupal::moduleHandler();
     $modules = $moduleHandler->getModuleList();
-    $user = \Drupal::currentUser();
+    $user = Drupal::currentUser();
 
-    $config = \Drupal::config('module_sitemap.settings');
+    $config = Drupal::config('module_sitemap.settings');
     $shouldDisplayFullUrl = $config->get('display_full_url');
     $shouldGroupByModule = $config->get('group_by_module');
 
