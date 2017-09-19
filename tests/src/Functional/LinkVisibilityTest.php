@@ -11,6 +11,9 @@ use Drupal\Core\Url;
  */
 class LinkVisibilityTest extends FunctionalTestBase {
 
+  /**
+   * Tests to see if the "Module Sitemap" link is visible.
+   */
   public function testLinkVisibility() {
     $this->drupalGet(Url::fromRoute('module_sitemap.module-sitemap')->toString());
     $this->assertSession()->linkExists('Module Sitemap');

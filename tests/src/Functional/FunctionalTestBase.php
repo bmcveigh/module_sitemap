@@ -2,11 +2,10 @@
 
 namespace Drupal\Tests\module_sitemap\Functional;
 
-
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Base class
+ * Base class for functional tests for module_sitemap.
  *
  * @package Drupal\Tests\module_sitemap\Functional
  */
@@ -16,6 +15,9 @@ class FunctionalTestBase extends BrowserTestBase {
 
   protected $authenticatedUser;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp() {
     parent::setUp();
 
