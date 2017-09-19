@@ -15,7 +15,7 @@ class ModuleSitemapController {
    * Page callback for /module-sitemap.
    */
   public function content() {
-    $build = array();
+    $build = [];
 
     $moduleHandler = Drupal::moduleHandler();
     $modules = $moduleHandler->getModuleList();
@@ -35,16 +35,16 @@ class ModuleSitemapController {
         $yml = file_get_contents($routing_path);
         $routing_data = Yaml::parse($yml);
         if ($shouldGroupByModule) {
-          $build[$module] = array(
+          $build[$module] = [
             '#type' => 'fieldset',
             '#title' => $info['name'],
-            '#attributes' => array(
-              'class' => array('module-sitemap-group'),
-            ),
-          );
+            '#attributes' => [
+              'class' => ['module-sitemap-group'],
+            ],
+          ];
         }
 
-        $routes = array();
+        $routes = [];
         foreach ($routing_data as $route_name => $route) {
           $user_is_admin = in_array('administrator', $user->getRoles());
 
@@ -88,10 +88,10 @@ class ModuleSitemapController {
           unset($build[$module]);
         }
 
-        $build[$module]['routes'] = array(
+        $build[$module]['routes'] = [
           '#type' => 'markup',
           '#markup' => implode('<br />', $routes),
-        );
+        ];
       }
     }
 

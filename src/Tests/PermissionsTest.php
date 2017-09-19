@@ -16,7 +16,7 @@ class PermissionsTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('module_sitemap');
+  public static $modules = ['module_sitemap'];
 
   /**
    * {@inheritdoc}
