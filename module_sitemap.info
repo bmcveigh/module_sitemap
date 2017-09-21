@@ -4,4 +4,3 @@ core = 7.x
 configure = admin/config/system/module_sitemap
 
 files[] = module_sitemap.test
-
