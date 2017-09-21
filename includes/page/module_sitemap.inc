@@ -4,6 +4,9 @@
  * @file
  */
 
+/**
+ * Page callback for the module sitemap main page.
+ */
 function module_sitemap_page_content() {
   $build = [];
 
@@ -13,17 +16,17 @@ function module_sitemap_page_content() {
   $shouldGroupByModule = variable_get('module_sitemap_group_by_module', TRUE);
 
   foreach (module_implements('menu') as $module) {
-      $routing_data = call_user_func("{$module}_menu");
+    $routing_data = call_user_func("{$module}_menu");
     $module_path = drupal_get_path('module', $module);
-      $info = drupal_parse_info_format(file_get_contents(DRUPAL_ROOT . '/' . $module_path . '/' . $module . '.info'));
-      if ($shouldGroupByModule) {
-        $build[$module] = [
-          '#type' => 'fieldset',
-          '#title' => $info['name'],
-          '#attributes' => [
-            'class' => ['module-sitemap-group'],
-          ],
-        ];
+    $info = drupal_parse_info_format(file_get_contents(DRUPAL_ROOT . '/' . $module_path . '/' . $module . '.info'));
+    if ($shouldGroupByModule) {
+      $build[$module] = [
+        '#type' => 'fieldset',
+        '#title' => $info['name'],
+        '#attributes' => [
+          'class' => ['module-sitemap-group'],
+        ],
+      ];
 
       $routes = [];
       foreach ($routing_data as $path => $route) {

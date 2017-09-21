@@ -46,12 +46,12 @@ function module_sitemap_help($path, $arg) {
  */
 function module_sitemap_permission() {
   return array(
-    'administer module sitemap' =>  array(
+    'administer module sitemap' => array(
       'title' => t('Administer Module Sitemap'),
       'description' => t('Change settings for the Module Sitemap module.'),
       'restrict access' => TRUE,
     ),
-    'access module sitemap' =>  array(
+    'access module sitemap' => array(
       'title' => t('Administer Module Sitemap'),
       'description' => t('Grant users the ability to view pages included from different modules.'),
     ),

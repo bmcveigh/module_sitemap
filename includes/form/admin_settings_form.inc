@@ -5,6 +5,9 @@
  * Configuration form for the Module Sitemap module.
  */
 
+/**
+ * Form to configure module sitemap module.
+ */
 function module_sitemap_admin_settings_form($form, &$form_state) {
   $form['module_sitemap_display_full_url'] = [
     '#type' => 'checkbox',
