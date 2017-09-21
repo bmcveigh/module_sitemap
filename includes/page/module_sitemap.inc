@@ -76,7 +76,7 @@ function module_sitemap_page_content() {
           $text_display = $route['title'];
         }
       }
-      $routes[] = l(check_plain($text_display), $path);
+      $routes[] = l($text_display, $path);
     }
 
     if (empty($routes)) {
