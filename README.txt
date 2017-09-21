@@ -27,8 +27,7 @@ the appropriate permissions. If that doesn't work, try clearing your cache.
 Below are three ways to clear your cache:
 1. UI - Navigate to 'admin/config/development/performance' and click
    the 'Clear all caches' button.
-2. Drush - from command line, enter 'drush cache-rebuild'.
-3. Drupal console - from the command line, enter 'drupal cache:rebuild'.
+2. Drush - from command line, enter 'drush cc all'.
 
 
 MAINTAINERS
