@@ -1,0 +1,4 @@
+name = Module Sitemap
+description = 'Provides a list of the available paths for all modules.'
+core = 7.x
+configure = admin/config/system/module_sitemap

@@ -5,15 +5,55 @@
  * Provide a sitemap for the list of available enabled modules.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
+/**
+ * Implements hook_menu().
+ */
+function module_sitemap_menu() {
+  $items['module-sitemap'] = array(
+    'title' => 'Module Sitemap',
+    'description' => 'View links provided by enabled modules.',
+    'page callback' => 'module_sitemap_page_content',
+    'access arguments' => array('access module sitemap'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/page/module_sitemap.inc',
+  );
+  $items['admin/config/development/module-sitemap'] = array(
+    'title' => 'Administer Module Sitemap',
+    'description' => 'Configure display settings for the Module Sitemap module.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('module_sitemap_admin_settings_form'),
+    'access arguments' => array('administer module sitemap'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/form/admin_settings_form.inc',
+  );
+
+  return $items;
+}
 
 /**
  * Implements hook_help().
  */
-function module_sitemap_help($route_name, RouteMatchInterface $route_match) {
-  switch ($route_name) {
-    case 'help.page.module_sitemap':
+function module_sitemap_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#module_sitemap':
       $help = t('@help_text', ['@help_text' => file_get_contents(drupal_get_path('module', 'module_sitemap') . '/README.txt')]);
       return nl2br($help);
   }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function module_sitemap_permission() {
+  return array(
+    'administer module sitemap' =>  array(
+      'title' => t('Administer Module Sitemap'),
+      'description' => t('Change settings for the Module Sitemap module.'),
+      'restrict access' => TRUE,
+    ),
+    'access module sitemap' =>  array(
+      'title' => t('Administer Module Sitemap'),
+      'description' => t('Grant users the ability to view pages included from different modules.'),
+    ),
+  );
 }

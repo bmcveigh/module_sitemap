@@ -14,7 +14,7 @@ INSTALLATION
 ------------
 
 Install as usual, see
-https://www.drupal.org/docs/8/extending-drupal-8/installing-modules for further
+https://www.drupal.org/docs/7/extending-drupal-7/installing-modules for further
 information.
 
 
