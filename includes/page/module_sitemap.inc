@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Contains page callback for the module sitemap main page.
  */
 
 /**

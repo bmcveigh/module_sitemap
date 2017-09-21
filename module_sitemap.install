@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Contains install, update, and uninstall functions.
  */
 
 /**

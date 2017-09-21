@@ -3,19 +3,17 @@
 /**
  * @file
  * Base class for functional tests for module_sitemap.
- *
- * @package Drupal\Tests\module_sitemap1
  */
 
 /**
- *
+ * Base class to perform functional tests for this module.
  */
 class ModuleSitemapFunctionalTestBase extends DrupalWebTestCase {
 
   /**
-   * A user that can access the module sitemap main page.
+   * A user object that can access the module sitemap main page.
    *
-   * @var
+   * @var \stdClass
    */
   protected $authenticatedUser;
 
