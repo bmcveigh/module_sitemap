@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * Base class for functional tests for module_sitemap.
+ *
+ * @package Drupal\Tests\module_sitemap1
+ */
+class ModuleSitemapFunctionalTestBase extends DrupalWebTestCase {
+
+  /**
+   * A user that can access the module sitemap main page.
+   *
+   * @var
+   */
+  protected $authenticatedUser;
+
+  protected function setUp() {
+    parent::setUp(['module_sitemap']);
+
+    $this->authenticatedUser = $this->drupalCreateUser(['access module sitemap']);
+    $this->drupalLogin($this->authenticatedUser);
+  }
+
+}
+
+/**
+ * Tests to make sure the Module Sitemap link is visible.
+ *
+ * @package Drupal\Tests\module_sitemap\Functional
+ */
+class ModuleSitemapLinkVisibilityTest extends ModuleSitemapFunctionalTestBase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Test the link visibility',
+      'description' => 'Tests to make sure the Module Sitemap link is visible.',
+      'group' => 'Module Sitemap',
+    );
+  }
+
+  /**
+   * Tests to see if the "Module Sitemap" link is visible.
+   */
+  public function testLinkVisibility() {
+    $this->drupalGet('module-sitemap');
+    $this->assertLink('Module Sitemap');
+  }
+}
+
+/**
+ * Tests module_sitemap access control.
+ *
+ * @group module_sitemap
+ */
+class ModuleSitemapPermissionsTest extends ModuleSitemapFunctionalTestBase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Test permissions for pages',
+      'description' => 'Tests to make sure the right users have access to the right module_sitemap pages.',
+      'group' => 'Module Sitemap',
+    );
+  }
+
+  /**
+   * Test the admin page as well as the sitemap page.
+   */
+  public function testUnauthorizedUser() {
+    // Log in as an authenticated drupal user so we can test the admin page.
+    $this->drupalLogin($this->drupalCreateUser());
+    // Test Sitemap functionality.
+    $this->drupalGet('module-sitemap');
+    $this->assertResponse(403);
+    // Make sure the configuration page exists. User should be denied access.
+    $this->drupalGet('admin/config/development/module-sitemap');
+    $this->assertResponse(403);
+  }
+  
+  /**
+   * Log in as a user with the 'access module sitemap' permission.
+   */
+  public function testAuthorizedUser() {
+    // Users with the 'access module sitemap' permission should be able to
+    // access the module sitemap page but not administer the module.
+    $this->drupalLogin($this->drupalCreateUser(['access module sitemap']));
+    // Test Sitemap functionality.
+    $this->drupalGet('module-sitemap');
+    $this->assertResponse(200);
+    // Make sure that this user cannot see any admin links. If they can, fail
+    // the test.
+    $this->assertNoLink('Administer');
+    // Make sure the configuration page exists. User should be denied access.
+    $this->drupalGet('admin/config/development/module-sitemap');
+    $this->assertResponse(403);
+  }
+
+  /**
+   * Log in as a user with the 'administer module sitemap' permission.
+   */
+  public function testAdminUser() {
+    $this->drupalLogin($this->drupalCreateUser(['access module sitemap', 'administer module sitemap']));
+    // Test Sitemap functionality.
+    $this->drupalGet('module-sitemap');
+    $this->assertResponse(200);
+    // Make sure the configuration page exists. User should be granted access.
+    $this->drupalGet('admin/config/development/module-sitemap');
+    $this->assertResponse(200);
+  }
+
+}
